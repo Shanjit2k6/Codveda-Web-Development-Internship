@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelCraft | JavaScript Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h2>PixelCraft.</h2>
+    <button id="dropdownBtn" type="button"
+      aria-expanded="false">Explore ▼</button>
+    <div id="dropdownMenu" class="dropdown hidden">
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="tag">JAVASCRIPT INTERACTIVITY</p>
+      <h1>Make your website interactive.</h1>
+      <p>Explore dropdowns, modals and form validation.</p>
+      <button id="openModal" type="button">Learn More</button>
+    </section>
+
+    <section id="features" class="panel">
+      <h2>Interactive Features</h2>
+      <p>Click the button below to see a modal window.</p>
+      <button id="featureBtn" type="button">Open Feature Details</button>
+    </section>
+
+    <section id="contact" class="panel">
+      <h2>Contact Us</h2>
+      <form id="contactForm" novalidate>
+        <label for="name">Full Name</label>
+        <input id="name" type="text" placeholder="Enter your name">
+        <small id="nameError" class="error"></small>
+
+        <label for="email">Email Address</label>
+        <input id="email" type="text" placeholder="Enter your email">
+        <small id="emailError" class="error"></small>
+
+        <label for="message">Message</label>
+        <textarea id="message" rows="4"
+          placeholder="Write your message"></textarea>
+        <small id="messageError" class="error"></small>
+
+        <button type="submit">Submit Form</button>
+        <p id="formStatus" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog"
+    aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button id="closeModal" class="close" type="button"
+        aria-label="Close dialog">×</button>
+      <h2 id="modalTitle">Welcome to PixelCraft!</h2>
+      <p>This modal is opened and closed using JavaScript.</p>
+      <button id="modalDone" type="button">Got it</button>
+    </div>
+  </div>
+
+  <footer>© 2026 PixelCraft Studio — JavaScript Demo</footer>
+</body>
+</html>

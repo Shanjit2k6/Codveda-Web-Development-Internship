@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Codveda To-Do List Application">
+  <title>TaskFlow | To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <main class="app-container">
+
+    <header class="app-header">
+      <p class="subtitle">CODVEDA LEVEL 2 - TASK 2</p>
+      <h1>TaskFlow</h1>
+      <p>Organize your day, one task at a time.</p>
+    </header>
+
+    <section class="todo-card" aria-label="Task manager">
+
+      <!-- Add Task -->
+      <form id="taskForm" class="task-form">
+        <label for="taskInput">Add a new task</label>
+
+        <div class="input-group">
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="What needs to be done?"
+            maxlength="100"
+            required
+          >
+          <button type="submit" id="addBtn">
+            Add Task
+          </button>
+        </div>
+      </form>
+
+      <!-- Task Statistics -->
+      <div class="task-stats">
+        <div>
+          <strong id="totalTasks">0</strong>
+          <span>Total</span>
+        </div>
+
+        <div>
+          <strong id="completedTasks">0</strong>
+          <span>Completed</span>
+        </div>
+
+        <div>
+          <strong id="pendingTasks">0</strong>
+          <span>Pending</span>
+        </div>
+      </div>
+
+      <!-- Task Filters -->
+      <div class="filters" aria-label="Task filters">
+        <button class="filter-btn active" data-filter="all">
+          All
+        </button>
+
+        <button class="filter-btn" data-filter="pending">
+          Pending
+        </button>
+
+        <button class="filter-btn" data-filter="completed">
+          Completed
+        </button>
+      </div>
+
+      <!-- Task List -->
+      <ul id="taskList" class="task-list"></ul>
+
+      <!-- Empty State -->
+      <p id="emptyState" class="empty-state">
+        No tasks found. Add your first task!
+      </p>
+
+      <!-- Clear Completed -->
+      <div class="task-actions">
+        <button id="clearCompleted" type="button">
+          Clear Completed
+        </button>
+      </div>
+
+      <!-- Status Message -->
+      <p id="statusMessage" role="status" aria-live="polite"></p>
+
+    </section>
+
+    <footer class="app-footer">
+      <p>Codveda Technologies | Web Development Internship</p>
+      <p>Level 2 - Task 2 | HTML, CSS & JavaScript</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>
