@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskVault – Organize Your Work, Amplify Your Focus</title>
+  <meta name="description" content="TaskVault is a professional full-stack task management system built with Node.js, Express, SQLite, and Vanilla JS." />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .floating-blobs { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+    .blob { position:absolute; border-radius:50%; filter:blur(80px); opacity:.12; animation:blobMove 8s ease-in-out infinite alternate; }
+    .blob1 { width:400px;height:400px; background:#6c4df6; top:-100px; left:-80px; }
+    .blob2 { width:320px;height:320px; background:#9333ea; bottom:-60px; right:80px; animation-delay:-3s; }
+    @keyframes blobMove { to { transform:translate(40px,30px) scale(1.1); } }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="landing-nav">
+    <div class="inner">
+      <a href="/" class="nav-brand">
+        <div class="nav-logo">🗄️</div>
+        <span>TaskVault</span>
+      </a>
+      <div class="nav-actions">
+        <a href="/login.html" class="btn btn-ghost btn-sm">Log In</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="floating-blobs">
+      <div class="blob blob1"></div>
+      <div class="blob blob2"></div>
+    </div>
+    <div class="hero-eyebrow">🚀 Level 3 Internship Project · Codveda Technologies</div>
+    <h1>Organize your work,<br /><span>Amplify your focus</span></h1>
+    <p class="hero-desc">
+      TaskVault is a secure, full-stack task management system that helps you stay on top of deadlines, priorities, and goals — all in one beautiful dashboard.
+    </p>
+    <div class="hero-cta">
+      <a href="/register.html" class="btn btn-primary btn-lg">✨ Start for Free</a>
+      <a href="/login.html" class="btn btn-secondary btn-lg">Log In</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:8px;">
+        <span style="background:var(--primary-light);color:var(--primary);padding:4px 14px;border-radius:999px;font-size:13px;font-weight:600;">Everything you need</span>
+      </div>
+      <h2 style="text-align:center;margin-top:16px;">Built for real productivity</h2>
+      <p style="text-align:center;margin-top:8px;max-width:500px;margin-inline:auto;">
+        From secure authentication to smart task filtering, TaskVault has all the tools you need to stay organized.
+      </p>
+      <div class="features-grid">
+        <div class="feature-card card">
+          <div class="feature-icon">🔐</div>
+          <h3>Secure Authentication</h3>
+          <p>JWT-based auth with bcrypt password hashing and HttpOnly cookies. Your data stays private and protected.</p>
+        </div>
+        <div class="feature-card card">
+          <div class="feature-icon">✅</div>
+          <h3>Full Task CRUD</h3>
+          <p>Create, edit, complete, and delete tasks anytime. Every change is instantly persisted to the database.</p>
+        </div>
+        <div class="feature-card card">
+          <div class="feature-icon">🎯</div>
+          <h3>Priority Levels</h3>
+          <p>Assign Low, Medium, or High priority to tasks. Filter by priority to focus on what matters most.</p>
+        </div>
+        <div class="feature-card card">
+          <div class="feature-icon">📅</div>
+          <h3>Due Dates & Deadlines</h3>
+          <p>Set due dates for every task and quickly spot overdue items highlighted in red.</p>
+        </div>
+        <div class="feature-card card">
+          <div class="feature-icon">🔍</div>
+          <h3>Search & Filter</h3>
+          <p>Instantly search across all tasks by title or description. Filter by All, Pending, or Completed status.</p>
+        </div>
+        <div class="feature-card card">
+          <div class="feature-icon">📊</div>
+          <h3>Live Statistics</h3>
+          <p>Track your total, completed, and pending tasks at a glance from the dashboard stats panel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to boost your productivity?</h2>
+      <p>Create your free account in seconds and start organizing your tasks today.</p>
+      <a href="/register.html" class="btn btn-lg" style="background:#fff;color:var(--primary);font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);">
+        🚀 Create Free Account
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>© 2024 <strong>TaskVault</strong> · Built by <a href="#">Shanjit Manoj</a> for Codveda Technologies Level-3 Internship</p>
+  </footer>
+
+  <!-- Redirect if already logged in -->
+  <script>
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.ok ? window.location.replace('/dashboard.html') : null)
+      .catch(() => {});
+  </script>
+</body>
+</html>

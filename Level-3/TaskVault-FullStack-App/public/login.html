@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In – TaskVault</title>
+  <meta name="description" content="Log in to your TaskVault account." />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Left panel -->
+    <div class="auth-left">
+      <div class="auth-brand">
+        <div class="auth-brand-icon">🗄️</div>
+        <span class="auth-brand-name">TaskVault</span>
+      </div>
+      <h2 class="auth-headline">Welcome back,<br/>stay on track.</h2>
+      <p class="auth-tagline">
+        Log in to manage your tasks, track deadlines, and make every day count.
+      </p>
+      <ul class="auth-features">
+        <li><span>🔐</span> JWT-secured and encrypted</li>
+        <li><span>📱</span> Responsive on any device</li>
+        <li><span>⚡</span> Real-time task updates</li>
+        <li><span>🎯</span> Priority-based task sorting</li>
+      </ul>
+    </div>
+
+    <!-- Right panel -->
+    <div class="auth-right">
+      <div class="auth-form-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;">
+          <div class="nav-logo" style="width:32px;height:32px;font-size:16px;">🗄️</div>
+          <span style="font-weight:700;font-size:.95rem;color:var(--text-secondary);">TaskVault</span>
+        </div>
+        <h1 class="auth-form-title">Log in to your account</h1>
+        <p class="auth-form-subtitle">Don't have an account? <a href="/register.html" class="auth-link">Sign up free</a></p>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="email">Email address</label>
+            <input type="email" id="email" class="form-input" placeholder="you@example.com" autocomplete="email" required />
+            <span class="form-error" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="password" class="form-input" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" id="togglePw" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);padding:2px;" aria-label="Toggle password visibility">👁️</button>
+            </div>
+            <span class="form-error" id="passwordError"></span>
+          </div>
+
+          <div id="formError" class="form-error" style="font-size:13px;padding:10px 14px;background:var(--danger-light);border-radius:var(--radius-sm);display:none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn">
+            <span id="btnText">Log In</span>
+            <span id="btnSpinner" class="spinner" style="display:none;"></span>
+          </button>
+        </form>
+
+        <p style="margin-top:24px;text-align:center;font-size:13px;color:var(--text-muted);">
+          <a href="/" style="color:var(--text-muted);">← Back to home</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/auth.js"></script>
+  <script>
+    // Toggle password visibility
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const pw = document.getElementById('password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    });
+
+    // Form handling
+    const form    = document.getElementById('loginForm');
+    const formErr = document.getElementById('formError');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      let valid = true;
+
+      if (!email) { showFieldError('emailError', 'Email is required.'); valid = false; }
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError('emailError', 'Enter a valid email.'); valid = false; }
+      if (!password) { showFieldError('passwordError', 'Password is required.'); valid = false; }
+      if (!valid) return;
+
+      setLoading(true);
+      try {
+        const res  = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('success', '✅ Logged in! Redirecting...');
+          setTimeout(() => window.location.replace('/dashboard.html'), 800);
+        } else {
+          showFormError(data.message || 'Login failed. Please try again.');
+        }
+      } catch {
+        showFormError('Network error. Please check your connection.');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    function clearErrors() {
+      document.getElementById('emailError').textContent    = '';
+      document.getElementById('passwordError').textContent = '';
+      formErr.style.display = 'none';
+    }
+    function showFieldError(id, msg) {
+      document.getElementById(id).textContent = msg;
+      const input = document.getElementById(id.replace('Error', ''));
+      if (input) input.classList.add('error');
+    }
+    function showFormError(msg) {
+      formErr.textContent   = msg;
+      formErr.style.display = 'block';
+    }
+    function setLoading(on) {
+      document.getElementById('submitBtn').disabled  = on;
+      document.getElementById('btnText').textContent = on ? 'Logging in…' : 'Log In';
+      document.getElementById('btnSpinner').style.display = on ? 'inline-block' : 'none';
+    }
+
+    // Redirect if already logged in
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.ok ? window.location.replace('/dashboard.html') : null)
+      .catch(() => {});
+  </script>
+</body>
+</html>
